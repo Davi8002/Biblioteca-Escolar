@@ -11,7 +11,7 @@ typedef struct {
   char sinopse[250];
   char genero[50];
   int paginas;
-  int emprestimo;
+  bool emprestimo;
 
 } Livro;
 int quantidadeLivro = 0;
@@ -56,7 +56,7 @@ void registroLivro(int i) {
   scanf("%d", &livro[i].paginas);
   getchar();
   // fflush(stdin);
-  livro[i].emprestimo = 0;
+  livro[i].emprestimo = false;
   system("clear"); // alterar dps se for usar no windows
 
   printf("\n--- Livro Cadastrado ---\n");
