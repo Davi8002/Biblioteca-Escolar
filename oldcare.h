@@ -61,7 +61,7 @@ void registroLivro(int i) {
 
   printf("\n--- Livro Cadastrado ---\n");
   printf("Nome: %s\n", livro[i].nome);
-  printf("ID: %d\n", livro[i].isbn);
+  printf("ISBN: %d\n", livro[i].isbn);
   printf("Autor: %s\n", livro[i].autor);
   printf("Sinopse: %s\n", livro[i].sinopse);
   printf("Gênero: %s\n", livro[i].genero);
