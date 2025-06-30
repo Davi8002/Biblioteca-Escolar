@@ -178,7 +178,8 @@ void emprestarLivro() {
   emprestimos[quantidadeEmprestimos].isbnLivro = isbn;
   emprestimos[quantidadeEmprestimos].ativo = true;
 
-  // salva a data que foi feita com esse comando louco
+  // salva a data que foi feita com esse comando louco igual a função mas to com
+  // pregiça de mudar pra usar a função
   time_t t = time(NULL);
   struct tm dataAtual = *localtime(&t);
   strftime(emprestimos[quantidadeEmprestimos].dataEmprestimo, 11, "%d/%m/%Y",
@@ -209,9 +210,12 @@ void emprestarLivro() {
 }
 
 void obterDataAtual(char *dataStr) {
-  time_t t = time(NULL);
-  struct tm dataAtual = *localtime(&t);
-  strftime(dataStr, 11, "%d/%m/%Y", &dataAtual);
+  time_t t = time(NULL); // criei a variavel t no formato time_h estilo data
+                         // 29/03/2025 mas so armazenou em segundos
+  struct tm dataAtual = *localtime(
+      &t); // dividiu em um struct proprio do c que deixa ficar com o 29/03/2025
+  strftime(dataStr, 11, "%d/%m/%Y",
+           &dataAtual); // por ultimo deixou nesse formato
 }
 
 int compararDatas(const char *data1, const char *data2) {
@@ -228,9 +232,9 @@ int compararDatas(const char *data1, const char *data2) {
 }
 
 void devolucaoLivros() {
-  system("clear"); 
+  system("clear");
 
-  // Variáveis
+  // cria as variáveis
   int matriculaAluno;
   char isbnLivroStr[20];
   char dataHoje[11];
@@ -242,14 +246,16 @@ void devolucaoLivros() {
 
   printf("Para qual matrícula de aluno o livro foi emprestado? ");
   scanf("%d", &matriculaAluno);
-  getchar(); // Limpa o buffer
+  getchar();
 
   printf("Qual o ISBN do livro a ser devolvido? ");
-  fgets(isbnLivroStr, sizeof(isbnLivroStr), stdin);
-  isbnLivroStr[strcspn(isbnLivroStr, "\n")] = '\0';
+  fgets(isbnLivroStr, sizeof(isbnLivroStr), stdin); // pega o isbn ne
+  isbnLivroStr[strcspn(isbnLivroStr, "\n")] = '\0'; // faz a limpeza do \n
 
-  int isbnLivroInt = atoi(isbnLivroStr);
+  int isbnLivroInt = atoi(
+      isbnLivroStr); // basicamente pega a string do fgets e transforma em int
 
+  // cria os indices pra comparar
   int indiceEmprestimo = -1;
   int indiceLivroAssociado = -1;
   int indiceAlunoAssociado = -1;
@@ -343,7 +349,9 @@ void devolucaoLivros() {
   }
 
   // --- Ações de Finalização da Devolução ---
-  strcpy(emprestimos[indiceEmprestimo].dataDevolucaoReal, dataHoje);
+  strcpy(emprestimos[indiceEmprestimo].dataDevolucaoReal,
+         dataHoje); // strcpy serve meio que pra copiar o valor de uma strng pra
+                    // outra
   emprestimos[indiceEmprestimo].ativo = false;
   livro[indiceLivroAssociado].emprestimo = false;
 
@@ -363,7 +371,7 @@ void mensagem(int i) {
     printf("4 - Renovar Empréstimo\n");
     printf("5 - Devolução de Livro\n");
     printf("6 - Pesquisa de Livro\n");
-    printf("7 - Listagem\n");
+    printf("7 - Listar Tudo\n");
     printf("\nOpção: ");
     break;
 
@@ -406,7 +414,8 @@ void renovarEmprestimo() {
   char dataHoje[11];
   obterDataAtual(dataHoje);
 
-  int diasDiferenca = compararDatas(dataHoje, emprestimos[indiceEmprestimo].dataEmprestimo);
+  int diasDiferenca =
+      compararDatas(dataHoje, emprestimos[indiceEmprestimo].dataEmprestimo);
 
   if (diasDiferenca < 7) {
     system("clear");
@@ -424,7 +433,8 @@ void renovarEmprestimo() {
       struct tm dataAtual = *localtime(&t);
       dataAtual.tm_mday += 7;
       mktime(&dataAtual);
-      strftime(emprestimos[indiceEmprestimo].dataDevolucaoPrevista, 11, "%d/%m/%Y", &dataAtual);
+      strftime(emprestimos[indiceEmprestimo].dataDevolucaoPrevista, 11,
+               "%d/%m/%Y", &dataAtual);
       system("clear");
       printf("Empréstimo renovado com sucesso por mais 7 dias!\n");
     } else {
@@ -446,8 +456,7 @@ void pesquisarLivros() {
   int encontrados = 0;
 
   for (int i = 0; i < quantidadeLivro; i++) {
-    if (strstr(livro[i].nome, termo) ||
-        strstr(livro[i].autor, termo) ||
+    if (strstr(livro[i].nome, termo) || strstr(livro[i].autor, termo) ||
         strstr(livro[i].genero, termo)) {
 
       printf("\n--- Livro Encontrado ---\n");
@@ -530,8 +539,8 @@ void processo() {
     pesquisarLivros();
     break;
 
-    case 7:
-  listarTudo();
+  case 7:
+    listarTudo();
     break;
   }
   processo();
