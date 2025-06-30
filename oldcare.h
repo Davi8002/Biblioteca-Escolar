@@ -254,7 +254,7 @@ void devolucaoLivros() {
   int indiceLivroAssociado = -1;
   int indiceAlunoAssociado = -1;
 
-  // Procura o empréstimo ativo que corresponde à matrícula e ao ISBN
+  // procura o emprestimo igual ao isbn e matricula
   for (int i = 0; i < quantidadeEmprestimos; i++) {
     if (emprestimos[i].ativo &&
         emprestimos[i].matriculaAluno == matriculaAluno &&
@@ -262,7 +262,7 @@ void devolucaoLivros() {
 
       indiceEmprestimo = i;
 
-      // Encontra o índice do livro e do aluno associados
+      // encontra o indice do livro e do aluno ligados
       for (int j = 0; j < quantidadeLivro; j++) {
         if (livro[j].isbn == isbnLivroInt) {
           indiceLivroAssociado = j;
@@ -276,11 +276,11 @@ void devolucaoLivros() {
           break;
         }
       }
-      break; // Sai do loop principal de empréstimos
+      break; // sai do loop principal de empréstimos
     }
   }
 
-  // Verifica se todos os índices foram encontrados
+  // verifica se todos os indices foram encontrados
   if (indiceEmprestimo == -1 || indiceLivroAssociado == -1 ||
       indiceAlunoAssociado == -1) {
     system("clear"); // Limpa a tela antes de mostrar a mensagem de erro
@@ -293,18 +293,18 @@ void devolucaoLivros() {
     return;
   }
 
-  // Obtém a data atual do sistema para registrar a devolução
+  // pega a data atual do sistema para registrar a devolução
   obterDataAtual(dataHoje);
 
-  // Compara a data de hoje com a data de devolução prevista
+  // compara a data de hoje com a data de devolução prevista
   int comparacaoDatas = compararDatas(
       dataHoje, emprestimos[indiceEmprestimo].dataDevolucaoPrevista);
 
-  // Usa o nome do aluno associado encontrado
+  // usa o nome do aluno associado encontrado
   char nomeAluno[50];
   strcpy(nomeAluno, alunos[indiceAlunoAssociado].nome);
 
-  system("clear"); // Limpa a tela antes de mostrar o status do prazo
+  system("clear"); // limpa a tela antes de mostrar o status do prazo
   if (comparacaoDatas <= 0) {
     printf("\nO livro '%s' está dentro do prazo de devolução!\n",
            livro[indiceLivroAssociado].nome);
@@ -320,9 +320,9 @@ void devolucaoLivros() {
   printf("\nDigite [1] se o livro estiver em bom estado.\n");
   printf("Digite [2] se o livro estiver em mau estado.\n");
   scanf("%d", &estadoLivro);
-  getchar(); // Limpa o buffer
+  getchar(); // limpa o buffer
 
-  system("clear"); // Limpa a tela antes de mostrar a confirmação final
+  system("clear"); // limpa a tela antes de mostrar a confirmação final
   if (estadoLivro == 1) {
     printf("\n------------------------------------------------\n");
     printf("O livro '%s' foi devolvido em bom estado.\n",
